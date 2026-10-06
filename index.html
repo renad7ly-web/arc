@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الأرشيف</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#f4f1ea;--card:#fff;--tx:#1d2a26;--mut:#7a8580;--ac:#1d6b57;--ac2:#0f4a3b;--gold:#c9a24b;--bd:#e6e1d5;--sh:0 2px 10px rgba(30,50,40,.07)}
+@media (prefers-color-scheme:dark){:root{--bg:#121715;--card:#1b2220;--tx:#e9e7e1;--mut:#94a09a;--ac:#4fb89b;--bd:#2c3532;--sh:none}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Cairo","Segoe UI",Tahoma,Arial,sans-serif;line-height:1.7}
+.hero{background:linear-gradient(135deg,var(--ac2),var(--ac));color:#fff;padding:34px 16px 62px}
+.hero>div{max-width:900px;margin:0 auto}
+h1{margin:0;font-size:32px;font-weight:800}
+.sub{margin:4px 0 18px;opacity:.85}
+.stats{display:flex;gap:10px}
+.stat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:6px 16px;text-align:center}
+.stat b{display:block;font-size:22px;color:#f3d98b;line-height:1.3}
+.stat span{font-size:13px}
+main{max-width:900px;margin:-38px auto 0;padding:0 16px 48px;position:relative}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:14px;box-shadow:var(--sh)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input,select{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;outline:none}
+input:focus,select:focus{border-color:var(--ac)}
+input{flex:1;min-width:160px;font-size:17px}
+.yr{margin:26px 0 10px;font-size:20px;font-weight:800;color:var(--ac);display:flex;align-items:center;gap:10px}
+.yr span:first-child{background:var(--ac);color:#fff;border-radius:999px;padding:0 16px}
+.yr:after{content:"";flex:1;height:2px;background:var(--bd);order:1}
+.yr span:last-child{order:2;font-size:13px;font-weight:400;color:var(--mut)}
+.item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:11px 14px;margin-bottom:9px;box-shadow:var(--sh);transition:transform .15s,border-color .15s}
+.item:hover{transform:translateY(-2px);border-color:var(--ac)}
+.ic{flex:none;width:44px;height:44px;border-radius:12px;background:rgba(201,162,75,.2);color:var(--gold);display:grid;place-items:center;font-size:12px;font-weight:800}
+.t{flex:1;min-width:0;overflow-wrap:anywhere;font-weight:600}
+.f{color:var(--mut);font-size:13px;font-weight:400}
+.item a{color:var(--ac);border:1px solid var(--ac);border-radius:999px;padding:2px 16px;text-decoration:none;font-weight:600}
+.item a:hover{background:var(--ac);color:#fff}
+.empty{color:var(--mut);text-align:center;padding:28px 0}
+mark{background:#f3d98b;color:#000;border-radius:4px;padding:0 3px}
+.cnt{color:var(--mut);font-size:14px;margin-top:6px}
+
+.hero>div{max-width:1100px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+.hero .tx{flex:1}
+.hero img{width:380px;max-width:40%;height:auto}
+h1{font-size:42px;line-height:1.3}
+main{max-width:1100px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:999px;padding:4px 18px;cursor:pointer;font:inherit;font-weight:600}
+.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.fc{background:var(--card);border:1px solid var(--bd);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh);transition:transform .15s,border-color .15s}
+.fc:hover{transform:translateY(-3px);border-color:var(--ac)}
+.fc .th{position:relative}
+.fc .th img{width:100%;height:140px;object-fit:cover;display:block}
+.fc .th b{position:absolute;top:10px;inset-inline-start:10px;background:var(--gold);color:#fff;border-radius:8px;padding:0 10px;font-size:12px}
+.fc .bd{padding:12px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.fc .t{font-weight:700;font-size:16px}
+.fc .bd div:last-child{margin-top:auto;display:flex;justify-content:space-between;align-items:center}
+@media(max-width:700px){.hero img{display:none}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header class="hero"><div><div class="tx">
+<h1>الأرشيف</h1>
+<p class="sub">ملفات مرتبة حسب السنة والعنوان — ابحث بالاسم لتظهر كل الملفات من جميع السنوات</p>
+<div class="stats"><div class="stat"><b id="sf">0</b><span>ملف</span></div><div class="stat"><b id="sy">0</b><span>سنة</span></div></div>
+</div><img src="assets/hero.svg" alt=""></div></header>
+<main>
+<div class="card">
+  <div class="row">
+    <input type="search" id="q" placeholder="ابحث بالاسم…">
+    
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="cnt" id="cnt"></div>
+</div>
+<div id="list"></div>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+let rows = [], ysel = "";
+const norm = s => (s||"").toString().toLowerCase()
+  .replace(/[\u064B-\u0652\u0640]/g,"").replace(/[أإآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه");
+
+function highlight(el, text, q){
+  const n = norm(text), k = norm(q);
+  if(!k || n.length !== text.length){ el.textContent = text; return; }
+  let i = 0, j;
+  while((j = n.indexOf(k, i)) !== -1){
+    el.append(text.slice(i,j));
+    const m = document.createElement("mark"); m.textContent = text.slice(j, j+k.length); el.append(m);
+    i = j + k.length;
+  }
+  el.append(text.slice(i));
+}
+function chip(label, val){
+  const b = document.createElement("button"); b.className = "chip" + (ysel===val ? " on":""); b.textContent = label;
+  b.onclick = ()=>{ ysel = val; render(); }; return b;
+}
+function render(){
+  const q = $("q").value.trim();
+  const years = [...new Set(rows.map(r=>r.year))].sort((a,b)=>b-a);
+  if(!years.map(String).includes(ysel)) ysel = "";
+  $("sf").textContent = rows.length; $("sy").textContent = years.length;
+  const ch = $("chips"); ch.textContent = "";
+  if(years.length){ ch.append(chip("كل السنوات","")); years.forEach(y=>ch.append(chip(String(y),String(y)))); }
+
+  const f = rows.filter(r => (!q || norm(r.title).includes(norm(q))) && (!ysel || String(r.year)===ysel));
+  $("cnt").textContent = rows.length ? `النتائج: ${f.length} من ${rows.length}` : "";
+  const list = $("list"); list.textContent = "";
+  if(!f.length){
+    const d = document.createElement("div"); d.className="empty";
+    d.textContent = rows.length ? "لا توجد نتائج مطابقة." : "الأرشيف فارغ حاليًا.";
+    list.append(d); return;
+  }
+  const by = {};
+  f.forEach(r => (by[r.year] ||= []).push(r));
+  Object.keys(by).sort((a,b)=>b-a).forEach(y=>{
+    const h = document.createElement("div"); h.className="yr";
+    h.innerHTML = "<span></span><span></span>";
+    h.children[0].textContent = y; h.children[1].textContent = by[y].length + " ملف";
+    const g = document.createElement("div"); g.className = "grid";
+    by[y].sort((a,b)=>a.title.localeCompare(b.title,"ar")).forEach(r=>{
+      const fname = r.file.split("/").pop(), ext = (fname.split(".").pop()||"FILE").slice(0,4).toUpperCase();
+      const c = document.createElement("div"); c.className="fc";
+      const th = document.createElement("div"); th.className="th";
+      const im = document.createElement("img"); im.src="assets/thumb.svg"; im.alt="";
+      const bg = document.createElement("b"); bg.textContent = ext; th.append(im,bg);
+      const bd = document.createElement("div"); bd.className="bd";
+      const t = document.createElement("div"); t.className="t"; highlight(t, r.title, q);
+      const ft = document.createElement("div");
+      const yy = document.createElement("span"); yy.className="f"; yy.textContent = r.year;
+      const a = document.createElement("a"); a.href = encodeURI(r.file); a.target="_blank"; a.rel="noopener"; a.textContent="فتح";
+      ft.append(yy,a); bd.append(t,ft); c.append(th,bd); g.append(c);
+    });
+    list.append(h,g);
+  });
+}
+$("q").addEventListener("input", render);
+fetch("archive.json").then(r=>r.json()).then(d=>{ rows = d; render(); })
+  .catch(()=>{ $("list").innerHTML = '<div class="empty">تعذر تحميل archive.json</div>'; });
+</script>
+</body>
+</html>
